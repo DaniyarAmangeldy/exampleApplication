@@ -2,7 +2,6 @@ package method.exampleapplication;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -11,8 +10,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -21,29 +30,33 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        List<String> weekdays = new ArrayList<>();
-        weekdays.add("Monday");
-        weekdays.add("Tuesday");
-        weekdays.add("Wednesday");
-        weekdays.add("Thursday");
-        weekdays.add("Friday");
-        weekdays.add("Saturday");
-        weekdays.add("Sunday");
-        for(String day: weekdays){
-            Log.d(TAG, "onCreate: "+day);
-        }
         setContentView(R.layout.activity_main);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final Gson gson = new GsonBuilder()
+                .registerTypeAdapter(InstaPost.class,new InstaConvert())
+                .create();
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
+                .build();
+        Request request = new Request.Builder()
+                .url("https://api.instagram.com/v1/users/275855784/media/recent/?access_token=275855784.1677ed0.4da1ffa33669461d819cf0ae595fc537")
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onClick(View v) {
-                fab.hide();
-                toolbar.setTitle("title");
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                gson.fromJson(response.body().string(),InstaPost.class);
             }
         });
+
     }
 
     @Override
