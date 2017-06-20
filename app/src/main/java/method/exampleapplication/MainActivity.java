@@ -1,21 +1,18 @@
 package method.exampleapplication;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import method.exampleapplication.responseModels.InstaResponse;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -25,7 +22,7 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-
+    private InstaResponse instaResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        final Gson gson = new GsonBuilder()
-                .registerTypeAdapter(InstaPost.class,new InstaConvert())
-                .create();
+        final Gson gson = new Gson();
 
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(20, TimeUnit.SECONDS)
@@ -47,13 +42,21 @@ public class MainActivity extends AppCompatActivity {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
+            public void onFailure(Call call, IOException e) {}
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                gson.fromJson(response.body().string(),InstaPost.class);
+                instaResponse = gson.fromJson(response.body().string(),InstaResponse.class);
+                /**
+                 * Эту часть кода ниже, я расскажу вам на следующем уроке. Просто знайте что я для проверки показываю toast
+                 * со ссылкой на инстаПост.
+                 */
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(MainActivity.this, instaResponse.getData().get(0).getImages().getStandard_resolution().getUrl(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 

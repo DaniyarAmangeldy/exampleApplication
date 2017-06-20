@@ -1,9 +1,12 @@
-package method.exampleapplication;
+package method.exampleapplication.responseModels;
 
 /**
  * Created by daniyaramangeldy on 19.06.17.
  */
 
+/**
+ * Здесь в user , вы найдете id , username  и profile_picture...
+ */
 public class User {
     private long id;
     private String username;
