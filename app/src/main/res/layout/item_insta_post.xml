@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/user_image"
@@ -17,7 +17,7 @@
         app:srcCompat="@mipmap/ic_launcher_round" />
 
     <TextView
-        android:id="@+id/user_location"
+        android:id="@+id/user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -27,20 +27,20 @@
         tools:text="daniyar_amangeldy" />
 
     <TextView
-        android:id="@+id/user_name"
+        android:id="@+id/user_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         app:layout_constraintLeft_toRightOf="@+id/user_image"
-        app:layout_constraintTop_toBottomOf="@+id/user_location"
+        app:layout_constraintTop_toBottomOf="@+id/user_name"
         tools:text="Method.kz" />
 
     <ImageView
         android:id="@+id/insta_options_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@+id/user_location"
+        app:layout_constraintTop_toTopOf="@+id/user_name"
         android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent" />
@@ -59,14 +59,15 @@
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/user_image" />
 
-    <ImageView
+    <CheckBox
         android:id="@+id/insta_like_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/insta_image"
         app:layout_constraintLeft_toRightOf="@+id/insta_comment_btn"
-        android:layout_marginLeft="8dp" />
+        android:layout_marginLeft="8dp"
+        android:button="@drawable/like_button"/>
 
     <ImageView
         android:id="@+id/insta_comment_btn"

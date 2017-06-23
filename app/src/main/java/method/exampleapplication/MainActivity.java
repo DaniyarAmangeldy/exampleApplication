@@ -2,6 +2,8 @@ package method.exampleapplication;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,16 +35,10 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private InstaResponse instaResponse;
 
-    @BindView(R.id.user_name)
-    TextView userName;
+    @BindView(R.id.rv)
+    RecyclerView rv;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.insta_image)
-    ImageView instaImage;
-    @BindView(R.id.user_image)
-    ImageView userImage;
-    @BindView(R.id.user_location)
-    TextView userLocation;
 
 
     @Override
@@ -79,13 +75,17 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                InstaPost post = response.getData().get(0);
-                User user = post.getUser();
-                Location location = post.getLocation();
-                Images image = post.getImages();
-                userName.setText(user.getUsername());
-                userLocation.setText(location.getName());
-                Picasso.with(MainActivity.this).load(image.getStandard_resolution().getUrl()).into(instaImage);
+                rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                instaAdapter adapter = new instaAdapter();
+                adapter.setInstaList(response.getData());
+                rv.setAdapter(adapter);
+//                InstaPost post = response.getData().get(0);
+//                User user = post.getUser();
+//                Location location = post.getLocation();
+//                Images image = post.getImages();
+//                userName.setText(user.getUsername());
+//                userLocation.setText(location.getName());
+//                Picasso.with(MainActivity.this).load(image.getStandard_resolution().getUrl()).into(instaImage);
             }
         });
 
