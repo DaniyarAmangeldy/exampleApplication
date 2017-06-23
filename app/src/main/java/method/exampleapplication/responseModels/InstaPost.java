@@ -14,6 +14,8 @@ public class InstaPost {
     private String id;
     private User user;
     private Images images;
+    private long created_time;
+    private Location location;
 
     public String getId() {
         return id;
@@ -37,5 +39,21 @@ public class InstaPost {
 
     public void setImages(Images images) {
         this.images = images;
+    }
+
+    public long getCreated_time() {
+        return created_time;
+    }
+
+    public void setCreated_time(long created_time) {
+        this.created_time = created_time;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 }

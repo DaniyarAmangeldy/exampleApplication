@@ -5,14 +5,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import method.exampleapplication.responseModels.Images;
+import method.exampleapplication.responseModels.InstaPost;
 import method.exampleapplication.responseModels.InstaResponse;
+import method.exampleapplication.responseModels.Location;
+import method.exampleapplication.responseModels.User;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -24,11 +33,23 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private InstaResponse instaResponse;
 
+    @BindView(R.id.user_name)
+    TextView userName;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.insta_image)
+    ImageView instaImage;
+    @BindView(R.id.user_image)
+    ImageView userImage;
+    @BindView(R.id.user_location)
+    TextView userLocation;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         final Gson gson = new Gson();
 
@@ -46,44 +67,31 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                instaResponse = gson.fromJson(response.body().string(),InstaResponse.class);
-                /**
-                 * Эту часть кода ниже, я расскажу вам на следующем уроке. Просто знайте что я для проверки показываю toast
-                 * со ссылкой на инстаПост.
-                 */
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(MainActivity.this, instaResponse.getData().get(0).getImages().getStandard_resolution().getUrl(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                String responseString = response.body().string(); // "{asdasdk...}"
+                instaResponse = gson.fromJson(responseString,InstaResponse.class);
+                fillPost(instaResponse);
             }
         });
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    private void fillPost(final InstaResponse response) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                InstaPost post = response.getData().get(0);
+                User user = post.getUser();
+                Location location = post.getLocation();
+                Images image = post.getImages();
+                userName.setText(user.getUsername());
+                userLocation.setText(location.getName());
+                Picasso.with(MainActivity.this).load(image.getStandard_resolution().getUrl()).into(instaImage);
+            }
+        });
+
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings3) {
-            Toast.makeText(this, getString(R.string.hello), Toast.LENGTH_SHORT).show();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
 
 }

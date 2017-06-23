@@ -16,7 +16,6 @@ import method.exampleapplication.responseModels.InstaPost;
 
 public class InstaResponse {
 
-
     private List<InstaPost> data;
 
     public List<InstaPost> getData() {
