@@ -16,6 +16,7 @@ public class InstaPost {
     private Images images;
     private long created_time;
     private Location location;
+    private Likes likes;
 
     public String getId() {
         return id;
@@ -55,5 +56,13 @@ public class InstaPost {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public Likes getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Likes likes) {
+        this.likes = likes;
     }
 }
