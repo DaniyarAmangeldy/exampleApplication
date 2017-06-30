@@ -22,6 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="0dp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
         app:layout_constraintLeft_toRightOf="@+id/user_image"
         app:layout_constraintTop_toTopOf="@+id/user_image"
         tools:text="daniyar_amangeldy" />
@@ -32,6 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
+        android:textColor="@android:color/black"
         app:layout_constraintLeft_toRightOf="@+id/user_image"
         app:layout_constraintTop_toBottomOf="@+id/user_name"
         tools:text="Method.kz" />
@@ -40,61 +43,82 @@
         android:id="@+id/insta_options_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@+id/user_name"
-        android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:layout_marginTop="8dp"
+        android:alpha="1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/user_name"
+        app:srcCompat="@drawable/ic_more_vert_black_24dp" />
 
     <ImageView
         android:id="@+id/insta_image"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="7dp"
+        android:visibility="gone"
+        app:layout_constraintDimensionRatio="h,16:9"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/ic_action_name"
-        app:layout_constraintDimensionRatio="h,16:9"
+        app:layout_constraintTop_toBottomOf="@+id/user_location"
+        app:srcCompat="@drawable/ic_action_name" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/user_image" />
+        android:background="@android:color/darker_gray"
+        app:layout_constraintLeft_toLeftOf="@+id/insta_like_btn"
+        app:layout_constraintRight_toRightOf="@+id/insta_favourite_btn"
+        app:layout_constraintTop_toBottomOf="@+id/insta_like_btn" />
 
     <CheckBox
         android:id="@+id/insta_like_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:button="@drawable/like_button"
+        android:checked="true"
+        app:buttonTint="@color/like_background"
         app:layout_constraintTop_toBottomOf="@+id/insta_image"
-        app:layout_constraintLeft_toRightOf="@+id/insta_comment_btn"
         android:layout_marginLeft="8dp"
-        android:button="@drawable/like_button"/>
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <ImageView
         android:id="@+id/insta_comment_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:tint="@android:color/darker_gray"
+        app:layout_constraintLeft_toRightOf="@+id/insta_like_btn"
         app:layout_constraintTop_toBottomOf="@+id/insta_image"
-         />
+        app:srcCompat="@drawable/ic_mode_comment_black_24dp" />
 
-    <ImageView
+    <CheckBox
         android:id="@+id/insta_favourite_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/insta_image"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:button="@drawable/flag_button"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/insta_like_btn" />
 
     <TextView
         android:id="@+id/insta_like_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:drawableLeft="@drawable/ic_favorite_black_24dp"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/insta_like_btn"
-        tools:text="likes: 999" />
+        tools:text="999"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
 </android.support.constraint.ConstraintLayout>

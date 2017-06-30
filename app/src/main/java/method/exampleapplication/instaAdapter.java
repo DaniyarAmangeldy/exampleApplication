@@ -74,12 +74,6 @@ public class instaAdapter extends RecyclerView.Adapter<instaAdapter.instaViewHol
         public instaViewHolder(final View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                }
-//            });
         }
 
         @OnCheckedChanged(R.id.insta_like_btn)
@@ -116,8 +110,7 @@ public class instaAdapter extends RecyclerView.Adapter<instaAdapter.instaViewHol
             if(post.getLocation()!=null) {
                 userLocation.setText(post.getLocation().getName());
             }
-            Picasso
-                    .with(itemView.getContext())
+            Picasso.with(itemView.getContext())
                     .load(post.getImages().getStandard_resolution().getUrl())
                     .into(instaImage);
             Picasso
